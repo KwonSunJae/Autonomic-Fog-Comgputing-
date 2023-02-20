@@ -50,7 +50,7 @@ spec:
         f = open( "./"+temp+"/deployment.yaml",mode ='w' )
         f.write(scripts)
         f.close()
-        query = 'sshpass -p {} scp -r {} root@{}:~/'.format(remote.rootpw,"~/Autonomic-Fog-Comgputing-/Controller/controller/remote/"+ temp, remote.ip)
+        query = 'sshpass -p {} scp -r {} root@{}:~/'.format(remote.rootpw,"~/Autonomic-Fog-Comgputing-/Controller/controller/"+ temp, remote.ip)
         subprocess.run(query, shell= True)
         subprocess.run('cd .. ',shell= True)
 
