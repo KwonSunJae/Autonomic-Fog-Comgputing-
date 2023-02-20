@@ -5,7 +5,7 @@ from enum import unique
 class Remote(models.Model):
     id  = models.BigAutoField("auto", primary_key=True)
     type = models.IntegerField()
-    ip = models.CharField('서버 아이피',max_length = 20)
+    ip = models.CharField('서버 아이피',max_length = 20,unique=True)
     name = models.CharField('서버 이름',max_length=20)
     rootpw = models.CharField('서버 비번',max_length=20)
     cloud = models.CharField('상위 서버 아이피',max_length=20)

@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt-get remove -y docker docker-engine docker.io containerd runc
+sudo apt-get remove -y docker docker-engine docker.io containerd runc snap
 sudo snap install -y docker
 sudo apt-get install -y prometheus prometheus-node-exporter
 curl -sfL https://get.k3s.io | sh -

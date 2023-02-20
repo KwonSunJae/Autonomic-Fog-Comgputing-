@@ -10,21 +10,23 @@ def createDockerfile(modules,remote):
         f.write("RUN apt-get update -y && apt-get upgrade -y\n")
         f.write("RUN apt-get install nginx git\n")
         f.write("RUN git clone " + module.giturl +end)
-        runs = 'RUN'
+        runs = 'RUN '
+        print(module.install)
         mrrs = module.install.split("\n")
+        
         for s in mrrs:
             f.write(runs+ s+end)
         mers = module.execute
         f.write("CMD "+ mers + end)
         f.close()
-        query = 'docker build -t ksun4131/' + str(module.remote_id.id) + module.name  + " . && cd .."
+        query = 'docker build -t ksun4131/' + str(module.remote_id.id) + module.name  + " ./remote/" + module.name +"/"
         subprocess.run(query, shell= True)
         query = "docker pull ksun4131/{}".format(str(module.remote_id.id) +module.name)
         subprocess.run(query, shell= True)
 def createYAMLfile(modules,remote):
     for module in modules:
         temp = str(module.remote_id.id) + module.name
-        subprocess.run("mkdir ~/"+ temp)
+        subprocess.run("mkdir "+ temp,shell=True)
         end = '\n'
         
         scripts = '''apiVersion: apps/v1

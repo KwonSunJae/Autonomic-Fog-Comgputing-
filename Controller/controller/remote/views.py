@@ -115,25 +115,39 @@ def fog2edge(request):
 def registerMachine(request):
     
     data = json.loads(request.body.decode('utf-8'))
+    selectremote = Remote()
+    flag = 1
     remote = Remote()
     remote.type = data['type'] 
     remote.name = data['name']
     remote.ip = data['ip']
     remote.cloud = data['cloud']
     remote.rootpw = data['rootpw']
-    remote.save()
+
+    try:
+        remote.save()
+    except:
+        print("skip")
+    temp = Remote.objects.all()
+    for t in temp:
+        if t.ip == data['ip']:
+            selectremote =t 
+            
+    
+
+    
     modules =[]
     for i in data['modules']:
-        modules.append(ModuleField(name= i['name'],remote_id=remote,giturl=i['giturl'],execute= i['execute'], install=['install'], envs=i['env'],priority=i['priority']))
-    if remote.type == 0:
-        initFog(remote)
-        createDockerfile(modules,remote)
-        createYAMLfile(modules,remote)
-        runYAMLfile(modules,remote)
+        modules.append(ModuleField(name= i['name'],remote_id=selectremote,giturl=i['giturl'],execute= i['execute'], install=i['install'], envs=i['env'],priority=i['priority']))
+    if selectremote.type == 0:
+        initFog(selectremote)
+        createDockerfile(modules,selectremote)
+        createYAMLfile(modules,selectremote)
+        runYAMLfile(modules,selectremote)
     else:
-        initEdge(remote)
-        createDockerfile(modules,remote)
-        createYAMLfile(modules,remote)
-        runDockerfile(modules, remote)
+        initEdge(selectremote)
+        createDockerfile(modules,selectremote)
+        createYAMLfile(modules,selectremote)
+        runDockerfile(modules, selectremote)
 
     return Response(status=200)
