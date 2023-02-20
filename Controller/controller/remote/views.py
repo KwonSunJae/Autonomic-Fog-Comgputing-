@@ -2,7 +2,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Remote
 from .serializers import RemoteSerializer
-from .control import initEdge, initFog,runDockerfile,runYAMLfile,stopEdgeModule,stopFogModule,healEdgeModule
+from .control import initEdge, initFog
+from .creater import runDockerfile,runYAMLfile,stopEdgeModule,stopFogModule,healEdgeModule,createDockerfile,createYAMLfile
 import json
 import subprocess
 import time
