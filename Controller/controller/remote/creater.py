@@ -16,17 +16,17 @@ def createDockerfile(modules,remote):
             f.write(runs+ s+end)
         mers = module.execute
         f.write("CMD "+ mers + end)
-        f.write("EXPOSE 80")
         f.close()
-        query = 'docker built -t ksun4131/' + str(remote.id) + module.name  + " . && cd .."
+        query = 'docker build -t ksun4131/' + str(remote.id) + module.name  + " . && cd .."
         subprocess.run(query, shell= True)
         query = "docker pull ksun4131/{}".format(str(remote.id) +module.name)
         subprocess.run(query, shell= True)
 def createYAMLfile(modules,remote):
     for module in modules:
-        subprocess.run("mkdir "+ module.name)
-        end = '\n'
         temp = str(remote.id) + module.name
+        subprocess.run("mkdir ~/"+ temp)
+        end = '\n'
+        
         scripts = '''apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,17 +44,32 @@ spec:
     spec:
       containers:
       - name: {}
-        image: ksun4131/{}
-        ports:
-        - containerPort: 80'''.format(temp,temp,temp,temp,temp,temp)
-        f = open( "./"+module.name+"/deployment.yaml",mode                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ,,,mmmmmmkllllllj                 ='w' )
+        image: docker.io/ksun4131/{}'''.format(temp,temp,temp,temp,temp,temp)
+        f = open( "./"+temp+"/deployment.yaml",mode                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ,,,mmmmmmkllllllj                 ='w' )
         f.write(scripts)
         f.close()
         query = 'sshpass -p {} scp -r {} root@{}:~/'.format(remote.rootpw,"~/Autonomic-Fog-Comgputing-/Controller/controller/remote/"+ temp, remote.ip)
         subprocess.run(query, shell= True)
+        subprocess.run('cd .. ',shell= True)
 
 def runDockerfile(modules, remote):
     for module in modules:
-        query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  "docker run -d --name {} -p {}:80 ksun4131/{}".format(module.name, 80 + module.priority, str(remote.id) + "/"+module.name ))
+        query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  "docker run -d --name {} ksun4131/{}".format(module.name, str(remote.id) +module.name ))
+        subprocess.run(query, shell= True)
+
+def runYAMLfile(modules, remote):
+    for module in modules:
+        query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  'kubectl apply -f ~/{} '.format(str(remote.id)+module.name ))
         subprocess.run(query, shell= True)
     
+def stopFogModule ( module, remote):
+    query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  'kubectl delete deployment {}'.format(str(remote.id)+module.name ))
+    subprocess.run(query, shell= True)
+
+def stopEdgeModule ( module, remote):
+    query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  'docker stop {}'.format(module.name))
+    subprocess.run(query, shell= True)
+
+def healEdgeModule ( module, remote):
+    query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  'docker restart {}'.format(module.name ))
+    subprocess.run(query, shell= True)
