@@ -19,9 +19,9 @@ def createDockerfile(modules,remote):
         mers = module.execute
         f.write("CMD "+ mers + end)
         f.close()
-        query = 'docker build -t ksun4131/' + str(module.remote_id.id) + module.name  + " ./" + module.name +"/"
+        query = 'sudo docker build -t ksun4131/' + str(module.remote_id.id) + module.name  + " ./" + module.name +"/"
         subprocess.run(query, shell= True)
-        query = "docker pull ksun4131/{}".format(str(module.remote_id.id) +module.name)
+        query = "sudo docker pull ksun4131/{}".format(str(module.remote_id.id) +module.name)
         subprocess.run(query, shell= True)
 def createYAMLfile(modules,remote):
     for module in modules:
