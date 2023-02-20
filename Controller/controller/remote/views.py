@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Remote
+from .models import Remote,ModuleField
 from .serializers import RemoteSerializer
 from .control import initEdge, initFog
 from .creater import runDockerfile,runYAMLfile,stopEdgeModule,stopFogModule,healEdgeModule,createDockerfile,createYAMLfile
