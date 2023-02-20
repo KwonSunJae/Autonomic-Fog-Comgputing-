@@ -12,6 +12,7 @@ class Remote(models.Model):
 
 class ModuleField(models.Model):
     remote_id = models.ForeignKey(Remote,related_name= 'remote',on_delete=models.CASCADE, default=Remote.objects.first())
+    priority = models.IntegerField('우선순위')
     name = models.CharField('모듈 이름', max_length=20)
     giturl = models.CharField('모듈 깃헙', max_length = 50)
     install = models.TextField('설치 스크립트')
