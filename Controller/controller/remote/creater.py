@@ -17,13 +17,13 @@ def createDockerfile(modules,remote):
         mers = module.execute
         f.write("CMD "+ mers + end)
         f.close()
-        query = 'docker build -t ksun4131/' + str(module.remote_id) + module.name  + " . && cd .."
+        query = 'docker build -t ksun4131/' + str(module.remote_id.id) + module.name  + " . && cd .."
         subprocess.run(query, shell= True)
-        query = "docker pull ksun4131/{}".format(str(module.remote_id) +module.name)
+        query = "docker pull ksun4131/{}".format(str(module.remote_id.id) +module.name)
         subprocess.run(query, shell= True)
 def createYAMLfile(modules,remote):
     for module in modules:
-        temp = str(module.remote_id) + module.name
+        temp = str(module.remote_id.id) + module.name
         subprocess.run("mkdir ~/"+ temp)
         end = '\n'
         
@@ -54,16 +54,16 @@ spec:
 
 def runDockerfile(modules, remote):
     for module in modules:
-        query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  "docker run -d --name {} ksun4131/{}".format(module.name, str(module.remote_id) +module.name ))
+        query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  "docker run -d --name {} ksun4131/{}".format(module.name, str(module.remote_id.id) +module.name ))
         subprocess.run(query, shell= True)
 
 def runYAMLfile(modules, remote):
     for module in modules:
-        query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  'kubectl apply -f ~/{} '.format(str(module.remote_id)+module.name ))
+        query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  'kubectl apply -f ~/{} '.format(str(module.remote_id.id)+module.name ))
         subprocess.run(query, shell= True)
     
 def stopFogModule ( module, remote):
-    query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  'kubectl delete deployment {}'.format(str(module.remote_id)+module.name ))
+    query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  'kubectl delete deployment {}'.format(str(module.remote_id.id)+module.name ))
     subprocess.run(query, shell= True)
 
 def stopEdgeModule ( module, remote):

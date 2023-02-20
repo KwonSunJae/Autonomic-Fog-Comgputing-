@@ -31,7 +31,7 @@ def automodeON(request):
             selectremote = s
             for m in modules:
 
-                if m.remote_id == s.id:
+                if m.remote_id == s:
                     selectmodules.append(m)
         if s.ip == data['fogIp']:
             selectfog = s
@@ -55,7 +55,7 @@ def automodeOFF(request):
             selectremote = s
             for m in modules:
 
-                if m.remote_id == s.id:
+                if m.remote_id == s:
                     selectmodules.append(m)
         if s.ip == data['fogIp']:
             selectfog = s
@@ -124,7 +124,7 @@ def registerMachine(request):
     remote.save()
     modules =[]
     for i in data['modules']:
-        modules.append(ModuleField(name= i['name'],remote_id=remote.id,giturl=i['giturl'],execute= i['execute'], install=['install'], env=i['env'],priority=i['priority']))
+        modules.append(ModuleField(name= i['name'],remote_id=remote,giturl=i['giturl'],execute= i['execute'], install=['install'], env=i['env'],priority=i['priority']))
     if remote.type == 0:
         initFog(remote)
         createDockerfile(modules,remote)
