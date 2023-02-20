@@ -22,18 +22,22 @@ def checkAPI(request):
 def automodeON(request):
     temp = Remote.objects.all()
     modules = ModuleField.objects.all()
-    selectremote= Remote(type=0, ip='117.16.136.172',rootpw= 'dmslab',cloud='0.0.0.0', name='test')
+    selectremote= Remote()
+    selectfog = Remote()
     selectmodules = []
     data = json.loads(request.body.decode('utf-8'))
     for s in temp:
-        if s.ip == '':
+        if s.ip == data['edgeIp']:
             selectremote = s
             for m in modules:
+
                 if m.remote_id == s.id:
                     selectmodules.append(m)
+        if s.ip == data['fogIp']:
+            selectfog = s
     
 
-    runYAMLfile(selectmodules,selectremote)
+    runYAMLfile(selectmodules,selectfog)
     for m in selectmodules:
         stopEdgeModule(m,selectremote)
     
@@ -42,18 +46,22 @@ def automodeON(request):
 def automodeOFF(request):
     temp = Remote.objects.all()
     modules = ModuleField.objects.all()
-    selectremote= Remote(type=0, ip='117.16.136.172',rootpw= 'dmslab',cloud='0.0.0.0', name='test')
+    selectremote= Remote()
+    selectfog = Remote()
     selectmodules = []
     data = json.loads(request.body.decode('utf-8'))
     for s in temp:
-        if s.ip == '':
+        if s.ip == data['edgeIp']:
             selectremote = s
             for m in modules:
+
                 if m.remote_id == s.id:
                     selectmodules.append(m)
+        if s.ip == data['fogIp']:
+            selectfog = s
     
     for m in selectmodules:
-        stopYAMLfile(m,selectremote)
+        stopYAMLfile(m,selectfog)
     for m in selectmodules:
         healEdgeModule(m,selectremote)
     
@@ -67,13 +75,13 @@ def edge2fog(request):
     selectmodule= ModuleField()
     data = json.loads(request.body.decode('utf-8'))
     for s in temp:
-        if s.ip == 'edge ip':
+        if s.ip == data['edgeIp']:
             selectremote = s
             
-        if s.ip == 'fog ip':
+        if s.ip == data['fogIp']:
             selectupper = s
     for m in modules:
-        if m.name == 'module name':
+        if m.name == data['moduleName']:
             selectmodule =m
             break
     runYAMLfile([selectmodule],selectupper)
@@ -90,13 +98,13 @@ def fog2edge(request):
     selectmodule= ModuleField()
     data = json.loads(request.body.decode('utf-8'))
     for s in temp:
-        if s.ip == 'edge ip':
+        if s.ip == data['edgeIp']:
             selectremote = s
             
-        if s.ip == 'fog ip':
+        if s.ip == data['fogIp']:
             selectupper = s
     for m in modules:
-        if m.name == 'module name':
+        if m.name == data['moduleName']:
             selectmodule =m
             break
     stopFogModule(selectmodule,selectupper)
