@@ -45,7 +45,7 @@ spec:
       containers:
       - name: {}
         image: docker.io/ksun4131/{}'''.format(temp,temp,temp,temp,temp,temp)
-        f = open( "./"+temp+"/deployment.yaml",mode                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ,,,mmmmmmkllllllj                 ='w' )
+        f = open( "./"+temp+"/deployment.yaml",mode ='w' )
         f.write(scripts)
         f.close()
         query = 'sshpass -p {} scp -r {} root@{}:~/'.format(remote.rootpw,"~/Autonomic-Fog-Comgputing-/Controller/controller/remote/"+ temp, remote.ip)
