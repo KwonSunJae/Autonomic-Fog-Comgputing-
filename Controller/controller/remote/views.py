@@ -124,7 +124,7 @@ def registerMachine(request):
     remote.save()
     modules =[]
     for i in data['modules']:
-        modules.append(ModuleField(name= i['name'],remote_id=remote,giturl=i['giturl'],execute= i['execute'], install=['install'], env=i['env'],priority=i['priority']))
+        modules.append(ModuleField(name= i['name'],remote_id=remote,giturl=i['giturl'],execute= i['execute'], install=['install'], envs=i['env'],priority=i['priority']))
     if remote.type == 0:
         initFog(remote)
         createDockerfile(modules,remote)
