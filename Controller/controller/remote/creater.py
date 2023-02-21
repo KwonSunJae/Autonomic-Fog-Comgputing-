@@ -8,7 +8,7 @@ def createDockerfile(modules,remote):
         f = open( "./"+module.name+"/Dockerfile",mode='w' )
         f.write("FROM ubuntu:20.04\n")
         f.write("RUN apt-get update -y && apt-get upgrade -y\n")
-        f.write("RUN apt-get install nginx git\n")
+        f.write("RUN apt-get install -y git\n")
         f.write("RUN git clone " + module.giturl +end)
         runs = 'RUN '
         print(module.install)
