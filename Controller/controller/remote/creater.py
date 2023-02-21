@@ -21,7 +21,7 @@ def createDockerfile(modules,remote):
         f.close()
         query = 'docker build -t ksun4131/' + str(module.remote_id.id) + module.name  + " ./" + module.name +"/"
         subprocess.run(query, shell= True)
-        query = "docker push ksun4131/{}".format(str(module.remote_id.id) +module.name)
+        query = "docker login -u ksun4131 -p ksun12345 && docker push ksun4131/{}".format(str(module.remote_id.id) +module.name)
         subprocess.run(query, shell= True)
 def createYAMLfile(modules,remote):
     for module in modules:
