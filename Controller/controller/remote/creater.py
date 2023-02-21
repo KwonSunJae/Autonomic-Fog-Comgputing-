@@ -19,7 +19,7 @@ def createDockerfile(modules,remote):
         mers = module.execute
         f.write("CMD "+ mers + end)
         f.close()
-        query = 'cd {} && docker build -t ksun4131/'.format(module.name) + str(module.remote_id.id) + module.name  + " ."
+        query = 'docker build -t ksun4131/' + str(module.remote_id.id) + module.name  + " ./" + module.name +"/"
         subprocess.run(query, shell= True)
         query = "docker push ksun4131/{}".format(str(module.remote_id.id) +module.name)
         subprocess.run(query, shell= True)
