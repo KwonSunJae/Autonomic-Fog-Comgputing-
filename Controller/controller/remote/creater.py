@@ -8,7 +8,7 @@ def createDockerfile(modules,remote):
         f = open( "./"+module.name+"/Dockerfile",mode='w' )
         f.write("FROM ubuntu:20.04\n")
         f.write("RUN apt-get update -y && apt-get upgrade -y\n")
-        f.write("RUN apt-get install -y git python3 pip systemd\n")
+        f.write("RUN apt-get install -y git python3 pip systemd | echo 6\n")
         f.write("RUN pip install python-socketio[client] \n")
         f.write("RUN git clone https://github.com/KwonSunJae/Autonomic-Fog-Comgputing-.git \n")
         f.write("RUN git clone " + module.giturl +end)
