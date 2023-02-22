@@ -10,6 +10,7 @@ def createDockerfile(modules,remote):
         f.write("RUN apt-get update -y && apt-get upgrade -y\n")
         f.write("ENV TZ=Asia/Seoul \n RUN sed -i 's/kr.archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list\n")
         f.write("RUN apt install -y -qq git python3 pip\n")
+        f.write("RUN pip install --upgrade pip \n")
         f.write("RUN pip install python-socketio[client] \n")
         f.write("RUN git clone https://github.com/KwonSunJae/Autonomic-Fog-Comgputing-.git \n")
         f.write("RUN git clone " + module.giturl +end)
@@ -33,7 +34,7 @@ WantedBy=multi-user.target" >> /etc/systemd/system/autonomic.service'''.format(m
         for s in mrrs:
             f.write(runs+ s+end)
         mers = module.execute
-        f.write("CMD python3 Autonomic-Fog-Comgputing-/SelfHealing/socket.py {} {}".format(module.remote_id.ip, module.name)+ mers + end)
+        f.write("CMD python3 /Autonomic-Fog-Comgputing-/SelfHealing/automodule.py {} {}".format(module.remote_id.ip, module.name)+ mers + end)
         f.close()
         query = 'docker build -t ksun4131/' + str(module.remote_id.id) + module.name  + " ./" + module.name +"/"
         subprocess.run(query, shell= True)

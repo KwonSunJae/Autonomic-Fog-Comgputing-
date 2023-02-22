@@ -1,7 +1,7 @@
 import socketio
 import time
 import sys
-sio = socketio.Client()
+sio = socketio.client()
 sio.connect('http://api-mongy.bibim-bap.com/socket')
 
 while True:
