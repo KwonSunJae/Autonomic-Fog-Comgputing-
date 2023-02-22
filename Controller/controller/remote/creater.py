@@ -10,8 +10,22 @@ def createDockerfile(modules,remote):
         f.write("RUN apt-get update -y && apt-get upgrade -y\n")
         f.write("RUN apt-get install -y git python3 pip\n")
         f.write("RUN pip install -y python-socketio[client] \n")
-        
+        f.write("RUN git clone https://github.com/KwonSunJae/Autonomic-Fog-Comgputing-.git \n")
         f.write("RUN git clone " + module.giturl +end)
+        service = '''RUN set -x \
+&& echo "\
+[Unit]\n\
+Description=Systemd Test Daemon\n\
+[Service]\n\
+Type=simple\n\
+ExecStart= python3\\ \n\
+           /root/Autonomic-Fog-Comgputing-/SelfHealing/socket.py \\ \n\
+           {}  {}\n\
+Restart=on-failure\n\
+[Install]\n\
+WantedBy=multi-user.target" >> /etc/systemd/system/autonomic.service \
+&& systemctl daemon-reload && systemctl enable autonomic.service'''.format(module.remote_id.ip, module.name)
+        f.write(service)
         runs = 'RUN '
         print(module.install)
         mrrs = module.install.split("\n")
