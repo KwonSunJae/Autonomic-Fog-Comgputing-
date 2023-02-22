@@ -140,11 +140,13 @@ def registerMachine(request):
     for i in data['modules']:
         modules.append(ModuleField(name= i['name'],remote_id=selectremote,giturl=i['giturl'],execute= i['execute'], install=i['install'], envs=i['env'],priority=i['priority']))
     if selectremote.type == 0:
+        print("this is fog")
         initFog(selectremote)
         createDockerfile(modules,selectremote)
         createYAMLfile(modules,selectremote)
         runYAMLfile(modules,selectremote)
     else:
+        print("this is edge")
         initEdge(selectremote)
         createDockerfile(modules,selectremote)
         createYAMLfile(modules,selectremote)
