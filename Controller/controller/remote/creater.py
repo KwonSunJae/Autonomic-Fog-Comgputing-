@@ -20,12 +20,12 @@ Description=Systemd Test Daemon\\n\\
 [Service]\\n\\
 Type=simple\\n\\
 ExecStart= python3\\ \\n\\
-           /root/Autonomic-Fog-Comgputing-/SelfHealing/socket.py \\ \\n\\
+           /root/Autonomic-Fog-Comgputing-/SelfHealing/socket.py \\ \\n\
            {}  {}\\n\\
 Restart=on-failure\\n\\
 [Install]\\n\\
-WantedBy=multi-user.target" >> /etc/systemd/system/autonomic.service \\n\\
-&& systemctl daemon-reload && systemctl enable autonomic.service'''.format(module.remote_id.ip, module.name)
+WantedBy=multi-user.target" >> /etc/systemd/system/autonomic.service \\
+&& systemctl daemon-reload && systemctl enable autonomic.service\n'''.format(module.remote_id.ip, module.name)
         f.write(service)
         runs = 'RUN '
         print(module.install)
