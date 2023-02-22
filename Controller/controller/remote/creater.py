@@ -20,7 +20,7 @@ Description=Systemd Test Daemon\\n\\
 [Service]\\n\\
 Type=simple\\n\\
 ExecStart= python3\\ \\n\\
-           /root/Autonomic-Fog-Comgputing-/SelfHealing/socket.py \\ \n\\
+           /root/Autonomic-Fog-Comgputing-/SelfHealing/socket.py \\ \\n\\
            {}  {}\\n\\
 Restart=on-failure\\n\\
 [Install]\\n\\
