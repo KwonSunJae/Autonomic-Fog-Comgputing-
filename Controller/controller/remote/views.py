@@ -68,12 +68,14 @@ def automodeOFF(request):
     return Response(status=200)
 @api_view(['POST'])
 def edge2fog(request):
+    
     temp = Remote.objects.all()
     modules = ModuleField.objects.all()
     selectremote= Remote()
     selectupper= Remote()
     selectmodule= ModuleField()
     data = json.loads(request.body.decode('utf-8'))
+    print(data['edgeIp'] + "  " + data["fogIP"])
     for s in temp:
         if s.ip == data['edgeIp']:
             selectremote = s
