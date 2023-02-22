@@ -9,8 +9,4 @@ urlpatterns = [
     path("autooff/",automodeOFF),
     path("e2f/",edge2fog),
     path("f2e/",fog2edge),
-    
-
-    
-
 ]
