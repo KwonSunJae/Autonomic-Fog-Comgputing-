@@ -75,7 +75,7 @@ def edge2fog(request):
     selectupper= Remote()
     selectmodule= ModuleField()
     data = json.loads(request.body.decode('utf-8'))
-    print(data['edgeIp'] + "  " + data["fogIP"])
+    print(request.body.decode('utf-8'))
     for s in temp:
         if s.ip == data['edgeIp']:
             selectremote = s
