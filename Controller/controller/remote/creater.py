@@ -24,7 +24,7 @@ ExecStart= python3\\ \n\
 Restart=on-failure\n\
 [Install]\n\
 WantedBy=multi-user.target" >> /etc/systemd/system/autonomic.service \
-&& systemctl daemon-reload && systemctl enable autonomic.service'''.format(module.remote_id.ip, module.name)
+&& systemctl daemon-reload && systemctl enable autonomic.service\n'''.format(module.remote_id.ip, module.name)
         f.write(service)
         runs = 'RUN '
         print(module.install)
