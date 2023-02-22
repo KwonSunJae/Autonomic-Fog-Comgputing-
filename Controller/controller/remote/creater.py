@@ -10,9 +10,10 @@ def createDockerfile(modules,remote):
         f.write("RUN apt-get update -y && apt-get upgrade -y\n")
         f.write("ENV TZ=Asia/Seoul \n RUN sed -i 's/kr.archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list\n")
         f.write("RUN apt install -y -qq git python3 pip\n")
+        f.write("RUN git clone https://github.com/KwonSunJae/Autonomic-Fog-Comgputing-.git \n")
         f.write("RUN pip install --upgrade pip \n")
         f.write("RUN pip install python-socketio[client] \n")
-        f.write("RUN git clone https://github.com/KwonSunJae/Autonomic-Fog-Comgputing-.git \n")
+        
         f.write("RUN git clone " + module.giturl +end)
         
         service = '''RUN set -x \\
