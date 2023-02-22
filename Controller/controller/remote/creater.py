@@ -8,7 +8,7 @@ def createDockerfile(modules,remote):
         f = open( "./"+module.name+"/Dockerfile",mode='w' )
         f.write("FROM ubuntu:20.04\n")
         f.write("RUN apt-get update -y && apt-get upgrade -y\n")
-        f.write("RUN apt-get install -y git python3 pip\n")
+        f.write("RUN apt-get install -y git python3 pip systemd\n")
         f.write("RUN pip install python-socketio[client] \n")
         f.write("RUN git clone https://github.com/KwonSunJae/Autonomic-Fog-Comgputing-.git \n")
         f.write("RUN git clone " + module.giturl +end)
@@ -24,7 +24,7 @@ ExecStart= python3\\ \\n\\
 Restart=on-failure\\n\\
 [Install]\\n\\
 WantedBy=multi-user.target" >> /etc/systemd/system/autonomic.service \\n\\
-&& service autonomic start'''.format(module.remote_id.ip, module.name)
+&& systemctl daemon-reload && systemctl enable autonomic.service'''.format(module.remote_id.ip, module.name)
         f.write(service)
         runs = 'RUN '
         print(module.install)
