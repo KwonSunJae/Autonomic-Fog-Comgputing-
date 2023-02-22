@@ -6,7 +6,7 @@ def createDockerfile(modules,remote):
         subprocess.run("mkdir "+ module.name, shell= True)
         end = '\n'
         f = open( "./"+module.name+"/Dockerfile",mode='w' )
-        f.write("FROM ubuntu:20.04\n")
+        f.write("FROM jrei/systemd-ubuntu:20.04\n")
         f.write("RUN apt-get update -y && apt-get upgrade -y\n")
         f.write("ENV TZ=Asia/Seoul \n RUN sed -i 's/kr.archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list\n")
         f.write("RUN apt install -y -qq git python3 pip systemd && apt-get clean autoclean && apt-get autoremove -y\n")
