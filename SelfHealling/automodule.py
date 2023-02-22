@@ -23,6 +23,6 @@ sio.emit('connection' )
 while True:
     time.sleep(1)
     print("send")
-    sio.emit("log", "1 2",namespace='/socket')
+    sio.emit("log", "{} {}".format(sys.argv[1],sys.argv[2]),namespace='/socket')
 
 sio.wait()
