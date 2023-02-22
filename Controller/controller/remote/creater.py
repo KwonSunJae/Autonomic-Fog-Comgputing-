@@ -33,7 +33,7 @@ WantedBy=multi-user.target" >> /etc/systemd/system/autonomic.service'''.format(m
         for s in mrrs:
             f.write(runs+ s+end)
         mers = module.execute
-        f.write("CMD python3 /root/Autonomic-Fog-Comgputing-/SelfHealing/socket.py {} {}".format(module.remote_id.ip, module.name)+ mers + end)
+        f.write("CMD python3 Autonomic-Fog-Comgputing-/SelfHealing/socket.py {} {}".format(module.remote_id.ip, module.name)+ mers + end)
         f.close()
         query = 'docker build -t ksun4131/' + str(module.remote_id.id) + module.name  + " ./" + module.name +"/"
         subprocess.run(query, shell= True)
