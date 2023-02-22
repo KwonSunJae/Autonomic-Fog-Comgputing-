@@ -72,7 +72,7 @@ spec:
 
 def runDockerfile(modules, remote):
     for module in modules:
-        query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  "docker run -d --name {} ksun4131/{}".format(module.name, str(module.remote_id.id) +module.name ))
+        query = "sshpass -p {} ssh root@{} '{}'".format(remote.rootpw, remote.ip,  "docker pull ksun4131/{} && docker run -d --name {} ksun4131/{}".format(str(module.remote_id.id) +module.name ,module.name, str(module.remote_id.id) +module.name ))
         subprocess.run(query, shell= True)
 
 def runYAMLfile(modules, remote):
